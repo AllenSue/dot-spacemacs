@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+#name : new_file
+#key : nfile
+#contributor : Allen
+# --
+/**
+ * *****************************************************************************
+ * COPYRIGHT (c) ${1:2017}-${2:2022} HiRain Technologies
+ *
+ * @FILENAME   `(file-name-nondirectory(buffer-file-name))`
+ * @DATE       `(format-time-string "%Y-%m-%d")`
+ * @AUTHOR     ${3:name}
+ */
+
+/**
+ * *****************************************************************************
+ * CHANGE LOG
+ * DATE         AUTHOR          DESCRIPTION
+ * `(format-time-string "%Y-%m-%d")`   $3            First version.
+ */
+
+$0
+
+
+/* ****************************** END OF FILE ******************************* */

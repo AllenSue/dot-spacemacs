@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+#name : new_function
+#key : nfunc
+#contributor : Allen
+# --
+/**
+ * @brief    ${4:Function description.}
+ *
+ * @param    ${5:Parameters description.}${1:$(if (string-match "void" yas-text) "" "
+ * @retval")}   ${6:${1:$(if (string-match "void" yas-text) "" "Return value description.")}}
+ */
+${1:type}
+${2:function_name} (${3:args...})
+{
+    $0
+}

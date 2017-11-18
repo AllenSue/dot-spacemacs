@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : comment_block
+#key : cb
+#contributor : Allen
+# --
+/**
+ * $0
+ */
