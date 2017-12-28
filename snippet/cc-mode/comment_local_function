@@ -1,12 +1,14 @@
 # -*- mode: snippet -*-
-#name : comment_module
-#key : commod
+#name : comment_local_function
+#key : comlf
 #contributor : Allen
 # --
 
 /**
  * *****************************************************************************
- *                               MODULE REGISTER
+ *   LOCAL FUNCTIONS
  * *****************************************************************************
  */
+
+$0
 

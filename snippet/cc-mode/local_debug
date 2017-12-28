@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+#name : local_debug
+#key : ldb
+#contributor : Allen
+# --
+/**
+ * For debug
+ */
+#define LOCAL_DEBUG 1
+
+#if LOCAL_DEBUG
+#   define DEBUG_PRINT(...)  dbg(__VA_ARGS__)
+#else /* LOCAL_DEBUG */
+#   define NDEBUG
+#   define DEBUG_PRINT(...)
+#endif /* LOCAL_DEBUG */
+
+#include <assert.h>

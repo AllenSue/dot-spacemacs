@@ -1,11 +1,14 @@
 # -*- mode: snippet -*-
-#name : comment_include
-#key : cominc
+#name : comment_type
+#key : comtyp
 #contributor : Allen
 # --
 
 /**
  * *****************************************************************************
- *                                   INCLUDES
+ *   TYPES
  * *****************************************************************************
  */
+
+$0
+

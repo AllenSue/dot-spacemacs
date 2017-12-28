@@ -1,14 +1,13 @@
 # -*- mode: snippet -*-
-#name : comment_local_function
-#key : comlf
+#name : comment_include
+#key : cominc
 #contributor : Allen
 # --
 
 /**
  * *****************************************************************************
- *                               LOCAL FUNCTIONS
+ *   INCLUDES
  * *****************************************************************************
  */
 
 $0
-
