@@ -12,12 +12,6 @@
  * @AUTHOR     ${3:name}
  */
 
-/**
- * *****************************************************************************
- * CHANGE LOG
- * DATE         AUTHOR          DESCRIPTION
- * `(format-time-string "%Y-%m-%d")`   $3            First version.
- */
 
 $0
 

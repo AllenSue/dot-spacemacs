@@ -60,7 +60,10 @@ This function should only modify configuration layer settings."
 
      (c-c++ :variables
             c-c++-enable-clang-support t
-            c-c++-default-mode-for-headers 'c-mode)
+            c-c++-enable-rtags-support t
+            c-c++-enable-google-style t
+            c-c++-enable-google-newline t
+            )
      semantic
      (ycmd :variables
            ycmd-server-command '("python" "/home/allen/tools/ycmd/ycmd")
@@ -410,10 +413,7 @@ before packages are loaded."
   (setq powerline-default-separator nil)
 
   ;; indent
-  (setq default-tab-width 4)
-  (add-hook 'c-mode-common-hook #'(lambda()(c-set-style "stroustrup")))
-  (setq-default c-basic-offset 4)
-  (setq nxml-child-indent 4)
+  ;; (setq nxml-child-indent 4)
 
   ;; no lock files
   (setq create-lockfiles nil)
@@ -471,7 +471,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (web-beautify livid-mode skewer-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package unfill typit treemacs-projectile treemacs-evil toc-org tagedit symon sudoku string-inflection stickyfunc-enhance srefactor spaceline solarized-theme smex smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el password-generator paradox pacmacs orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow lorem-ipsum live-py-mode linum-relative link-hint less-css-mode info+ indent-guide impatient-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flyspell-correct-helm flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fcitx fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump disaster diff-hl define-word cython-mode company-ycmd company-web company-statistics company-quickhelp company-c-headers company-anaconda common-lisp-snippets column-enforce-mode cmake-mode cmake-ide clean-aindent-mode clang-format browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell 2048-game))))
+    (yasnippet-snippets spaceline-all-the-icons all-the-icons memoize font-lock+ org-mime counsel-projectile counsel swiper ivy yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill typit treemacs-projectile treemacs-evil toc-org tagedit symon sudoku string-inflection stickyfunc-enhance srefactor spaceline solarized-theme smex smeargle slime-company slim-mode shell-pop scss-mode sass-mode restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pippel pip-requirements persp-mode pcre2el password-generator paradox pacmacs overseer orgit org-projectile org-present org-pomodoro org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc info+ indent-guide importmagic impatient-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md ggtags fuzzy flyspell-correct-helm flycheck-ycmd flycheck-rtags flycheck-pos-tip flx-ido fill-column-indicator fcitx fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump disaster diff-hl define-word cython-mode company-ycmd company-web company-tern company-statistics company-rtags company-quickhelp company-c-headers company-anaconda common-lisp-snippets column-enforce-mode coffee-mode cmake-mode cmake-ide clean-aindent-mode clang-format browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell 2048-game))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
