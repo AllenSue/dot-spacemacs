@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+#name : new_function
+#key : nf
+#contributor : Allen
+# --
+${1:type} ${2:function_name}(${3:args...})
+{
+  $0
+}

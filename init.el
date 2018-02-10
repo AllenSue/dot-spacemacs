@@ -43,8 +43,8 @@ This function should only modify configuration layer settings."
                       )
      better-defaults
      emacs-lisp
-     git
      markdown
+     git
      org
 
      (shell :variables
@@ -69,17 +69,14 @@ This function should only modify configuration layer settings."
 
      semantic
 
-     html
+     ;; html
      (python :variables
              python-shell-interpreter "python3")
      smex
-     (treemacs :variables
-               treemacs-use-follow-mode t
-               treemacs-use-filewatch-mode t
-               treemacs-use-collapsed-directories 3)
+     treemacs
      yaml
-     imenu-list
      javascript
+     my-cquery
 
      )
    ;; List of additional packages that will be installed without being
@@ -89,14 +86,13 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '
    (
     fcitx
-    company-lsp
-    helm-xref
     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages
    '(
+     clang-format
      )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -433,9 +429,6 @@ before packages are loaded."
   ;; spell check
   (ispell-change-dictionary "american" t)
 
-  ;; snippet
-  (add-to-list 'yas-snippet-dirs (expand-file-name "snippet" dotspacemacs-directory))
-
   ;; fcitx
   ;; Make sure the following comes before `(fcitx-aggressive-setup)'
   (setq fcitx-active-evil-states '(insert emacs hybrid)) ; if you use hybrid mode
@@ -449,85 +442,9 @@ before packages are loaded."
      (set-fontset-font (frame-parameter nil 'font) charset
                        (font-spec :family "微软雅黑" :size 14))))
 
-  ;; lsp-mode & cquery
-  (add-to-list 'load-path "/home/allen/tools/emacs-lsp/lsp-mode")
-  (with-eval-after-load 'lsp-mode
-    (require 'lsp-flycheck))
-  (spacemacs|diminish lsp-mode " Ⓛ" " L")
-
-  (use-package cquery
-    :load-path
-    "/home/allen/tools/emacs-cquery"
-    :init
-    (add-hook 'c-mode-common-hook 'lsp-cquery-enable)
-    :config
-    (setq cquery-executable "/home/allen/tools/cquery/build/release/bin/cquery")
-    ;; overlay is slow
-    ;; Use https://github.com/emacs-mirror/emacs/commits/feature/noverlay
-    ;; (setq cquery-sem-highlight-method 'overlay)
-    ;; (cquery-use-default-rainbow-sem-highlight)
-    (setq cquery-extra-init-params '(
-                                     :index (:comments 0)
-                                            :completion (:detailedLabel t)
-                                            ))
-    )
-
-  (use-package lsp-ui
-    :after lsp-mode
-    :after markdown-mode
-    :load-path
-    "/home/allen/tools/emacs-lsp/lsp-ui"
-    :config
-    (progn
-      (add-hook 'lsp-mode-hook #'lsp-ui-mode)
-      ;; (setq lsp-ui-doc-include-signature nil)  ; don't include type signature in the child frame
-      (setq 
-       lsp-ui-sideline-show-symbol nil  ; don't show symbol on the right of info
-       lsp-ui-sideline-show-hover nil
-       ;; lsp-ui-sideline-show-code-actions nil
-       ;; lsp-ui-sideline-show-flycheck nil
-       ;; lsp-ui-sideline-ignore-duplicate t
-       )
-      (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-      (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-      ))
-
-  (use-package company-lsp
-    :defer t
-    :init
-    (setq company-quickhelp-delay 0)
-    ;; Language servers have better idea filtering and sorting,
-    ;; don't filter results on the client side.
-    (setq
-     company-transformers nil
-     company-lsp-async t
-     company-lsp-enable-snippet nil
-     company-lsp-cache-candidates nil
-     )
-    (spacemacs|add-company-backends :backends company-lsp :modes c-mode-common)
-    )
-
-  (use-package helm-xref
-    :config
-    (progn
-      ;; This is required to make xref-find-references not give a prompt.
-      ;; xref-find-references asks the identifier (which has no text property) and
-      ;; then passes it to lsp-mode, which requires the text property at point to
-      ;; locate the references.
-      ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=29619
-      (setq xref-prompt-for-identifier
-            '(not
-              xref-find-definitions
-              xref-find-definitions-other-window
-              xref-find-definitions-other-frame
-              xref-find-references
-              spacemacs/jump-to-definition
-              ))
-
-      ;; Use helm-xref to display xref.el results.
-      (setq xref-show-xrefs-function #'helm-xref-show-xrefs)
-      ))
-
+  (with-eval-after-load 'smartparens
+    (assq-delete-all :unmatched-expression sp-message-alist))
+  
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -544,7 +461,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (stickyfunc-enhance srefactor yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org tagedit symon string-inflection spaceline-all-the-icons solarized-theme smex smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode json-mode js2-refactor js-doc indent-guide importmagic impatient-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-rtags flycheck-pos-tip flx-ido fill-column-indicator fcitx fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump disaster diff-hl define-word cython-mode counsel-projectile company-web company-tern company-statistics company-rtags company-quickhelp company-lsp company-c-headers company-anaconda column-enforce-mode coffee-mode clean-aindent-mode clang-format centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
+    (helm-xref yasnippet-snippets yapfify yaml-mode xterm-color ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-evil toc-org symon string-inflection stickyfunc-enhance srefactor spaceline-all-the-icons solarized-theme smex smeargle shell-pop restart-emacs realgud rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pippel pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nameless mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lsp-ui lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide importmagic hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-rtags flycheck-pos-tip flx-ido fill-column-indicator fcitx fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump disaster diminish diff-hl define-word cython-mode cquery counsel-projectile company-tern company-statistics company-rtags company-quickhelp company-lsp company-c-headers company-anaconda column-enforce-mode coffee-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
