@@ -12,7 +12,10 @@
 (defun my-cquery/init-cquery()
   (use-package cquery
     :init
-    (add-hook 'c-mode-common-hook 'lsp-cquery-enable)
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (require 'company-lsp)
+                (lsp-cquery-enable)))
     :config
     (setq
      cquery-executable "/home/allen/tools/cquery/build/release/bin/cquery"
@@ -30,7 +33,6 @@
     (setq
      company-transformers nil
      company-lsp-async t
-     company-lsp-enable-snippet nil
      company-lsp-cache-candidates nil
      )
     (spacemacs|add-company-backends :backends company-lsp :modes c-mode-common)
